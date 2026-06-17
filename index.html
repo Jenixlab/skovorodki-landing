@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сковородки — Jenix</title>
+    <style>
+        :root {
+            --bg: #0d0d1a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 107, 53, 0.3);
+            --text: #e0e0e0;
+            --text-secondary: #888;
+            --text-heading: #fff;
+            --accent: #ff6b35;
+            --accent-hover: #ff8c5a;
+            --gradient: linear-gradient(135deg, #ff6b35, #ff8c5a, #ffaa00);
+            --badge-bg: rgba(255, 107, 53, 0.15);
+            --footer-text: #555;
+            --modal-bg: #1a1a2e;
+            --particle-opacity: 0.15;
+        }
+
+        [data-theme="light"] {
+            --bg: #f5f5f5;
+            --bg-card: #ffffff;
+            --border: rgba(0, 0, 0, 0.08);
+            --border-hover: rgba(255, 107, 53, 0.4);
+            --text: #333333;
+            --text-secondary: #777777;
+            --text-heading: #1a1a1a;
+            --accent: #e65100;
+            --accent-hover: #ff6d00;
+            --gradient: linear-gradient(135deg, #e65100, #ff6d00, #ff9800);
+            --badge-bg: rgba(255, 107, 53, 0.1);
+            --footer-text: #999999;
+            --modal-bg: #ffffff;
+            --particle-opacity: 0.08;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
+        }
+
+        /* Фоновые частицы */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: float linear infinite;
+            opacity: var(--particle-opacity);
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.2; }
+            90% { opacity: 0.1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* Контент */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Кнопка темы и музыка */
+        .top-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 50;
+            display: flex;
+            gap: 10px;
+        }
+        .ctrl-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text);
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .ctrl-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+        .ctrl-btn.playing {
+            border-color: var(--accent);
+            animation: musicPulse 2s infinite;
+        }
+        @keyframes musicPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.3); }
+            50% { box-shadow: 0 0 20px 10px rgba(255, 107, 53, 0.1); }
+        }
+
+        /* Шапка */
+        .header {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+        .logo {
+            font-size: 80px;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        .header h1 {
+            font-size: 52px;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 10px 0;
+        }
+        .header .subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+        .author-badge {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: var(--badge-bg);
+            border: 1px solid var(--border-hover);
+            border-radius: 50px;
+            color: var(--accent);
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+        .author-name {
+            font-weight: 700;
+            color: var(--accent-hover);
+        }
+
+        /* Секции */
+        .section {
+            margin: 30px 0;
+        }
+        .section-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            padding-left: 15px;
+            border-left: 3px solid var(--accent);
+        }
+
+        /* Карточки */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 35px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            transition: left 0.5s ease;
+        }
+        .card:hover::before {
+            left: 100%;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.08);
+        }
+        .card-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+        .card h3 {
+            font-size: 22px;
+            margin-bottom: 8px;
+            color: var(--text-heading);
+        }
+        .card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .card .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            background: var(--badge-bg);
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--accent);
+            margin: 3px;
+        }
+
+        /* Кнопки */
+        .btn {
+            display: inline-block;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            letter-spacing: 1px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b35, #ff8c5a);
+            color: #fff;
+            box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.4);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--accent);
+            color: var(--accent);
+        }
+        .btn-outline:hover {
+            background: rgba(255, 107, 53, 0.1);
+        }
+        .btn-small {
+            padding: 10px 22px;
+            font-size: 13px;
+        }
+
+        /* Секция скачивания */
+        .download-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 650px) {
+            .download-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        .download-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 35px 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .download-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-3px);
+        }
+        .download-card .icon {
+            font-size: 55px;
+        }
+        .download-card h3 {
+            font-size: 20px;
+            margin: 12px 0 6px;
+            color: var(--text-heading);
+        }
+        .download-card .info {
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+        .download-card .size {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        /* Подвал */
+        .footer {
+            text-align: center;
+            padding: 50px 0 30px;
+            color: var(--footer-text);
+            font-size: 14px;
+        }
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        .footer .heart {
+            color: #ff4444;
+        }
+
+        /* Модалка */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal {
+            background: var(--modal-bg);
+            border: 1px solid var(--border-hover);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+        }
+        .modal h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--text-heading);
+        }
+        .modal .emoji {
+            font-size: 60px;
+        }
+        .modal p {
+            color: var(--text-secondary);
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+        .modal .btn {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Частицы -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Кнопки управления -->
+    <div class="top-controls">
+        <button class="ctrl-btn" id="musicBtn" onclick="toggleMusic()" title="Музыка">🎵</button>
+        <button class="ctrl-btn" id="themeBtn" onclick="toggleTheme()" title="Сменить тему">🌙</button>
+    </div>
+
+    <!-- Фоновая музыка -->
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Контент -->
+    <div class="container">
+        
+        <!-- Шапка -->
+        <header class="header">
+            <div class="logo">🍳</div>
+            <h1>СКОВОРОДКИ</h1>
+            <p class="subtitle">Учёт товаров • Мобильная и десктопная версия</p>
+            <div class="author-badge">
+                Разработчик: <span class="author-name">Jenix (Естелин Савелий)</span>
+            </div>
+        </header>
+
+        <!-- Возможности -->
+        <div class="section">
+            <h2 class="section-title">Возможности приложения</h2>
+            <div class="cards">
+                <div class="card">
+                    <div class="card-icon">📝</div>
+                    <h3>9 полей ввода</h3>
+                    <p>Модель, бренд, материал основы, внутреннее покрытие, толщина дна, толщина стенок, объём, количество, цена</p>
+                    <span class="badge">Полный учёт</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>Excel-файл</h3>
+                    <p>Сохранение всех данных в отдельный .xlsx файл для постоянного хранения и анализа</p>
+                    <span class="badge">Экспорт</span>
+                    <span class="badge">Импорт</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌙</div>
+                    <h3>Две темы</h3>
+                    <p>Переключение между тёмной и светлой темой в один клик. Лаконичный Material Design</p>
+                    <span class="badge">UI/UX</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✨</div>
+                    <h3>Генерация</h3>
+                    <p>Автоматическая генерация 150 случайных моделей сковородок для тестирования</p>
+                    <span class="badge">Demo-данные</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📱</div>
+                    <h3>Android</h3>
+                    <p>Нативное мобильное приложение на Kotlin с Jetpack Compose и Material 3</p>
+                    <span class="badge">APK</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💻</div>
+                    <h3>Windows</h3>
+                    <p>Десктопное приложение на Python с Tkinter. Запускается без установки</p>
+                    <span class="badge">EXE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Скачать -->
+        <div class="section">
+            <h2 class="section-title">Скачать приложение</h2>
+            <div class="download-section">
+                <!-- Android -->
+                <div class="download-card">
+                    <div class="icon">📱</div>
+                    <h3>Android (APK)</h3>
+                    <p class="info">Мобильное приложение на Kotlin<br>Jetpack Compose • Material 3</p>
+                    <p class="size">~15 MB • Android 8.0+</p>
+                    <br>
+                    <a href="files/app-debug.apk" class="btn btn-primary" download>
+                        ⬇ Скачать APK
+                    </a>
+                </div>
+                <!-- Windows -->
+                <div class="download-card">
+                    <div class="icon">💻</div>
+                    <h3>Windows (EXE)</h3>
+                    <p class="info">Десктопное приложение на Python<br>Tkinter • openpyxl</p>
+                    <p class="size">~25 MB • Windows 10/11</p>
+                    <br>
+                    <a href="files/Сковородки.exe" class="btn btn-primary" download>
+                        ⬇ Скачать EXE
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Подвал -->
+        <footer class="footer">
+            <p>Сделано с <span class="heart">❤️</span> • Jenix (Естелин Савелий) • 2026</p>
+            <p><a href="https://github.com/jenix-sk">GitHub</a></p>
+        </footer>
+    </div>
+
+    <!-- Модалка "Об авторе" -->
+    <div class="modal-overlay" id="modalAuthor">
+        <div class="modal">
+            <div class="emoji">👨‍💻</div>
+            <h2>Jenix</h2>
+            <p style="color: var(--accent); font-weight: 600;">Естелин Савелий</p>
+            <p>Разработчик мобильных и десктопных приложений.<br>Специализация: Kotlin, Python, Compose, Tkinter.</p>
+            <button class="btn btn-primary btn-small" onclick="closeModal()">Закрыть</button>
+        </div>
+    </div>
+
+    <script>
+        // Частицы
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 40; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 6 + 2;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = Math.random() * 12 + 8 + 's';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Тема
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            const current = html.getAttribute('data-theme');
+            if (current === 'light') {
+                html.removeAttribute('data-theme');
+                btn.textContent = '🌙';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                btn.textContent = '☀️';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Загружаем сохранённую тему
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'light');
+            document.getElementById('themeBtn').textContent = '☀️';
+        }
+
+        // Музыка
+        const bgMusic = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        bgMusic.volume = 0.3;
+        let musicPlaying = false;
+
+        function toggleMusic() {
+            if (musicPlaying) {
+                bgMusic.pause();
+                musicBtn.textContent = '🎵';
+                musicBtn.classList.remove('playing');
+            } else {
+                bgMusic.play().catch(() => {
+                    alert('Нажмите ещё раз — браузер блокирует автовоспроизведение');
+                });
+                musicBtn.textContent = '🎶';
+                musicBtn.classList.add('playing');
+            }
+            musicPlaying = !musicPlaying;
+        }
+
+        // Автовоспроизведение музыки при первом клике по странице
+        document.addEventListener('click', function initMusic() {
+            if (!musicPlaying) {
+                bgMusic.play().catch(() => {});
+                musicPlaying = true;
+                musicBtn.textContent = '🎶';
+                musicBtn.classList.add('playing');
+            }
+        }, { once: true });
+
+        function closeModal() {
+            document.getElementById('modalAuthor').classList.remove('active');
+        }
+    </script>
+
+</body>
+</html>
