@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +20,8 @@
             --footer-text: #555;
             --modal-bg: #1a1a2e;
             --particle-opacity: 0.15;
+            --chip-bg: rgba(255, 255, 255, 0.04);
+            --chip-text: #aaa;
         }
 
         [data-theme="light"] {
@@ -37,13 +39,11 @@
             --footer-text: #999999;
             --modal-bg: #ffffff;
             --particle-opacity: 0.08;
+            --chip-bg: rgba(0, 0, 0, 0.04);
+            --chip-text: #666;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
@@ -54,22 +54,10 @@
             transition: background 0.5s ease, color 0.5s ease;
         }
 
-        /* Фоновые частицы */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
         .particle {
-            position: absolute;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: float linear infinite;
-            opacity: var(--particle-opacity);
+            position: absolute; background: var(--accent); border-radius: 50%;
+            animation: float linear infinite; opacity: var(--particle-opacity);
         }
         @keyframes float {
             0% { transform: translateY(100vh) scale(0); opacity: 0; }
@@ -78,322 +66,174 @@
             100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
 
-        /* Контент */
-        .container {
-            position: relative;
-            z-index: 1;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+        .container { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 40px 20px; }
 
-        /* Кнопка темы и музыка */
-        .top-controls {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 50;
-            display: flex;
-            gap: 10px;
-        }
+        .top-controls { position: fixed; top: 20px; right: 20px; z-index: 50; display: flex; gap: 10px; }
         .ctrl-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 1px solid var(--border);
-            background: var(--bg-card);
-            color: var(--text);
-            cursor: pointer;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
+            width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border);
+            background: var(--bg-card); color: var(--text); cursor: pointer; font-size: 20px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease; backdrop-filter: blur(10px);
         }
-        .ctrl-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            transform: scale(1.1);
-        }
-        .ctrl-btn.playing {
-            border-color: var(--accent);
-            animation: musicPulse 2s infinite;
-        }
+        .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); transform: scale(1.1); }
+        .ctrl-btn.playing { border-color: var(--accent); animation: musicPulse 2s infinite; }
         @keyframes musicPulse {
             0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.3); }
             50% { box-shadow: 0 0 20px 10px rgba(255, 107, 53, 0.1); }
         }
 
-        /* Шапка */
-        .header {
-            text-align: center;
-            padding: 60px 0 40px;
-        }
-        .logo {
-            font-size: 80px;
-            animation: bounce 2s infinite;
-        }
+        .header { text-align: center; padding: 60px 0 40px; }
+        .logo { font-size: 80px; animation: bounce 2s infinite; }
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
         }
         .header h1 {
-            font-size: 52px;
-            font-weight: 900;
+            font-size: 52px; font-weight: 900;
             background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
             margin: 10px 0;
         }
-        .header .subtitle {
-            font-size: 18px;
-            color: var(--text-secondary);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
+        .header .subtitle { font-size: 18px; color: var(--text-secondary); letter-spacing: 4px; text-transform: uppercase; }
         .author-badge {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 25px;
-            background: var(--badge-bg);
-            border: 1px solid var(--border-hover);
-            border-radius: 50px;
-            color: var(--accent);
-            font-size: 16px;
-            letter-spacing: 1px;
+            display: inline-block; margin-top: 20px; padding: 10px 25px;
+            background: var(--badge-bg); border: 1px solid var(--border-hover);
+            border-radius: 50px; color: var(--accent); font-size: 16px; letter-spacing: 1px;
         }
-        .author-name {
-            font-weight: 700;
-            color: var(--accent-hover);
-        }
+        .author-name { font-weight: 700; color: var(--accent-hover); }
 
-        /* Секции */
-        .section {
-            margin: 30px 0;
-        }
+        .section { margin: 30px 0; }
         .section-title {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--accent);
-            margin-bottom: 20px;
-            padding-left: 15px;
+            font-size: 14px; text-transform: uppercase; letter-spacing: 3px;
+            color: var(--accent); margin-bottom: 20px; padding-left: 15px;
             border-left: 3px solid var(--accent);
         }
 
-        /* Карточки */
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 35px 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 20px; padding: 35px 30px; text-align: center;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
         }
         .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
             transition: left 0.5s ease;
         }
-        .card:hover::before {
-            left: 100%;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: var(--border-hover);
-            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.08);
-        }
-        .card-icon {
-            font-size: 50px;
-            margin-bottom: 15px;
-        }
-        .card h3 {
-            font-size: 22px;
-            margin-bottom: 8px;
-            color: var(--text-heading);
-        }
-        .card p {
-            color: var(--text-secondary);
-            font-size: 14px;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
+        .card:hover::before { left: 100%; }
+        .card:hover { transform: translateY(-5px); border-color: var(--border-hover); box-shadow: 0 20px 60px rgba(255, 107, 53, 0.08); }
+        .card-icon { font-size: 50px; margin-bottom: 15px; }
+        .card h3 { font-size: 22px; margin-bottom: 8px; color: var(--text-heading); }
+        .card p { color: var(--text-secondary); font-size: 14px; margin-bottom: 20px; line-height: 1.5; }
         .card .badge {
-            display: inline-block;
-            padding: 5px 12px;
-            background: var(--badge-bg);
-            border-radius: 20px;
-            font-size: 12px;
-            color: var(--accent);
-            margin: 3px;
+            display: inline-block; padding: 5px 12px; background: var(--badge-bg);
+            border-radius: 20px; font-size: 12px; color: var(--accent); margin: 3px;
         }
 
-        /* Кнопки */
         .btn {
-            display: inline-block;
-            padding: 14px 35px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 700;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: none;
-            letter-spacing: 1px;
+            display: inline-block; padding: 14px 35px; border-radius: 50px;
+            font-size: 16px; font-weight: 700; text-decoration: none; cursor: pointer;
+            transition: all 0.3s ease; border: none; letter-spacing: 1px;
         }
         .btn-primary {
-            background: linear-gradient(135deg, #ff6b35, #ff8c5a);
-            color: #fff;
+            background: linear-gradient(135deg, #ff6b35, #ff8c5a); color: #fff;
             box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3);
         }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.4);
-        }
-        .btn-outline {
-            background: transparent;
-            border: 2px solid var(--accent);
-            color: var(--accent);
-        }
-        .btn-outline:hover {
-            background: rgba(255, 107, 53, 0.1);
-        }
-        .btn-small {
-            padding: 10px 22px;
-            font-size: 13px;
-        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255, 107, 53, 0.4); }
+        .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
+        .btn-outline:hover { background: rgba(255, 107, 53, 0.1); }
+        .btn-small { padding: 10px 22px; font-size: 13px; }
 
-        /* Секция скачивания */
-        .download-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        @media (max-width: 650px) {
-            .download-section {
-                grid-template-columns: 1fr;
-            }
-        }
+        .download-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 650px) { .download-section { grid-template-columns: 1fr; } }
         .download-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 35px 25px;
-            text-align: center;
-            transition: all 0.3s ease;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 20px; padding: 35px 25px; text-align: center; transition: all 0.3s ease;
         }
-        .download-card:hover {
-            border-color: var(--border-hover);
-            transform: translateY(-3px);
+        .download-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+        .download-card .icon { font-size: 55px; }
+        .download-card h3 { font-size: 20px; margin: 12px 0 6px; color: var(--text-heading); }
+        .download-card .info { color: var(--text-secondary); font-size: 13px; margin-bottom: 18px; }
+        .download-card .size { color: var(--accent); font-weight: 600; font-size: 13px; }
+        .download-card .version { color: var(--accent); font-size: 12px; margin-top: 8px; }
+
+        /* Секция версий */
+        .versions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .version-card {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 16px; padding: 25px 20px; transition: all 0.3s ease;
         }
-        .download-card .icon {
-            font-size: 55px;
+        .version-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .version-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+        .version-tag {
+            background: var(--gradient); color: #fff; padding: 6px 16px;
+            border-radius: 20px; font-weight: 700; font-size: 14px;
         }
-        .download-card h3 {
-            font-size: 20px;
-            margin: 12px 0 6px;
-            color: var(--text-heading);
+        .version-date { color: var(--text-secondary); font-size: 12px; }
+        .version-card ul { list-style: none; }
+        .version-card li {
+            color: var(--text-secondary); font-size: 13px; padding: 4px 0;
+            padding-left: 18px; position: relative;
         }
-        .download-card .info {
-            color: var(--text-secondary);
-            font-size: 13px;
-            margin-bottom: 18px;
-        }
-        .download-card .size {
-            color: var(--accent);
-            font-weight: 600;
-            font-size: 13px;
+        .version-card li::before {
+            content: '▸'; position: absolute; left: 0; color: var(--accent);
         }
 
-        /* Подвал */
-        .footer {
-            text-align: center;
-            padding: 50px 0 30px;
-            color: var(--footer-text);
-            font-size: 14px;
+        /* Соцсети */
+        .social-links { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
+        .social-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 12px 24px; border-radius: 50px;
+            font-size: 15px; font-weight: 600; text-decoration: none;
+            transition: all 0.3s ease; cursor: pointer;
         }
-        .footer a {
-            color: var(--accent);
-            text-decoration: none;
+        .social-vk {
+            background: #0077ff; color: #fff;
+            box-shadow: 0 4px 20px rgba(0, 119, 255, 0.3);
         }
-        .footer .heart {
-            color: #ff4444;
+        .social-vk:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 119, 255, 0.4); }
+        .social-gh {
+            background: #24292e; color: #fff;
+            box-shadow: 0 4px 20px rgba(36, 41, 46, 0.3);
         }
+        .social-gh:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(36, 41, 46, 0.4); }
 
-        /* Модалка */
+        .footer { text-align: center; padding: 50px 0 30px; color: var(--footer-text); font-size: 14px; }
+        .footer a { color: var(--accent); text-decoration: none; }
+        .footer .heart { color: #ff4444; }
+
         .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8); z-index: 100;
+            justify-content: center; align-items: center;
         }
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
         .modal {
-            background: var(--modal-bg);
-            border: 1px solid var(--border-hover);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
+            background: var(--modal-bg); border: 1px solid var(--border-hover);
+            border-radius: 20px; padding: 40px; text-align: center;
+            max-width: 450px; width: 90%;
         }
-        .modal h2 {
-            font-size: 28px;
-            margin-bottom: 10px;
-            color: var(--text-heading);
-        }
-        .modal .emoji {
-            font-size: 60px;
-        }
-        .modal p {
-            color: var(--text-secondary);
-            margin: 15px 0;
-            line-height: 1.6;
-        }
-        .modal .btn {
-            margin-top: 15px;
-        }
+        .modal h2 { font-size: 28px; margin-bottom: 10px; color: var(--text-heading); }
+        .modal .emoji { font-size: 60px; }
+        .modal p { color: var(--text-secondary); margin: 15px 0; line-height: 1.6; }
+        .modal .btn { margin-top: 15px; }
     </style>
 </head>
 <body>
 
-    <!-- Частицы -->
     <div class="particles" id="particles"></div>
 
-    <!-- Кнопки управления -->
     <div class="top-controls">
         <button class="ctrl-btn" id="musicBtn" onclick="toggleMusic()" title="Музыка">🎵</button>
         <button class="ctrl-btn" id="themeBtn" onclick="toggleTheme()" title="Сменить тему">🌙</button>
     </div>
 
-    <!-- Фоновая музыка -->
     <audio id="bgMusic" loop preload="auto">
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Контент -->
     <div class="container">
-        
-        <!-- Шапка -->
+
         <header class="header">
             <div class="logo">🍳</div>
             <h1>СКОВОРОДКИ</h1>
@@ -401,9 +241,16 @@
             <div class="author-badge">
                 Разработчик: <span class="author-name">Jenix (Естелин Савелий)</span>
             </div>
+            <div class="social-links">
+                <a href="https://vk.com/sav_fujiyama" target="_blank" class="social-btn social-vk">
+                    <span>🔷</span> ВКонтакте
+                </a>
+                <a href="https://github.com/Jenixlab" target="_blank" class="social-btn social-gh">
+                    <span>🔶</span> GitHub
+                </a>
+            </div>
         </header>
 
-        <!-- Возможности -->
         <div class="section">
             <h2 class="section-title">Возможности приложения</h2>
             <div class="cards">
@@ -447,46 +294,78 @@
             </div>
         </div>
 
-        <!-- Скачать -->
         <div class="section">
             <h2 class="section-title">Скачать приложение</h2>
             <div class="download-section">
-                <!-- Android -->
                 <div class="download-card">
                     <div class="icon">📱</div>
                     <h3>Android (APK)</h3>
                     <p class="info">Мобильное приложение на Kotlin<br>Jetpack Compose • Material 3</p>
                     <p class="size">~15 MB • Android 8.0+</p>
+                    <p class="version">Версия 1.1</p>
                     <br>
-                    <a href="files/app-debug.apk" class="btn btn-primary" download>
-                        ⬇ Скачать APK
-                    </a>
+                    <a href="files/app-debug.apk" class="btn btn-primary" download>⬇ Скачать APK</a>
                 </div>
-                <!-- Windows -->
                 <div class="download-card">
                     <div class="icon">💻</div>
                     <h3>Windows (EXE)</h3>
                     <p class="info">Десктопное приложение на Python<br>Tkinter • openpyxl</p>
                     <p class="size">~25 MB • Windows 10/11</p>
+                    <p class="version">Версия 1.1</p>
                     <br>
-                    <a href="files/Сковородки.exe" class="btn btn-primary" download>
-                        ⬇ Скачать EXE
-                    </a>
+                    <a href="files/Сковородки.exe" class="btn btn-primary" download>⬇ Скачать EXE</a>
                 </div>
             </div>
         </div>
 
-        <!-- Подвал -->
-               <footer class="footer">
+        <div class="section">
+            <h2 class="section-title">История версий</h2>
+            <div class="versions-grid">
+                <div class="version-card">
+                    <div class="version-header">
+                        <span class="version-tag">v1.1</span>
+                        <span class="version-date">Июнь 2026</span>
+                    </div>
+                    <ul>
+                        <li>Добавлен раздел истории версий</li>
+                        <li>Кнопки соцсетей ВК и GitHub</li>
+                        <li>Улучшен дизайн карточек</li>
+                    </ul>
+                </div>
+                <div class="version-card">
+                    <div class="version-header">
+                        <span class="version-tag">v1.0</span>
+                        <span class="version-date">Июнь 2026</span>
+                    </div>
+                    <ul>
+                        <li>Добавлены ссылки на ВК и GitHub</li>
+                        <li>Опубликован лендинг</li>
+                        <li>Файлы доступны для скачивания</li>
+                    </ul>
+                </div>
+                <div class="version-card">
+                    <div class="version-header">
+                        <span class="version-tag">v0.9</span>
+                        <span class="version-date">Май 2026</span>
+                    </div>
+                    <ul>
+                        <li>Первая версия лендинга</li>
+                        <li>Базовый дизайн и структура</li>
+                        <li>Подготовка к публикации</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
             <p>Сделано с <span class="heart">❤️</span> • Jenix (Естелин Савелий) • 2026</p>
             <p>
-                <a href="https://github.com/jenix-sk">GitHub</a> &nbsp;|&nbsp;
-                <a href="https://vk.com/sav_fujiyama" target="_blank">ВКонтакте</a>
+                <a href="https://vk.com/sav_fujiyama" target="_blank">ВКонтакте</a> &nbsp;|&nbsp;
+                <a href="https://github.com/Jenixlab" target="_blank">GitHub</a>
             </p>
         </footer>
     </div>
 
-    <!-- Модалка "Об авторе" -->
     <div class="modal-overlay" id="modalAuthor">
         <div class="modal">
             <div class="emoji">👨‍💻</div>
@@ -498,7 +377,6 @@
     </div>
 
     <script>
-        // Частицы
         const particlesContainer = document.getElementById('particles');
         for (let i = 0; i < 40; i++) {
             const particle = document.createElement('div');
@@ -512,7 +390,6 @@
             particlesContainer.appendChild(particle);
         }
 
-        // Тема
         function toggleTheme() {
             const html = document.documentElement;
             const btn = document.getElementById('themeBtn');
@@ -528,14 +405,12 @@
             }
         }
 
-        // Загружаем сохранённую тему
         const savedTheme = localStorage.getItem('theme');
         if (savedTheme === 'light') {
             document.documentElement.setAttribute('data-theme', 'light');
             document.getElementById('themeBtn').textContent = '☀️';
         }
 
-        // Музыка
         const bgMusic = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         bgMusic.volume = 0.3;
@@ -547,16 +422,13 @@
                 musicBtn.textContent = '🎵';
                 musicBtn.classList.remove('playing');
             } else {
-                bgMusic.play().catch(() => {
-                    alert('Нажмите ещё раз — браузер блокирует автовоспроизведение');
-                });
+                bgMusic.play().catch(() => {});
                 musicBtn.textContent = '🎶';
                 musicBtn.classList.add('playing');
             }
             musicPlaying = !musicPlaying;
         }
 
-        // Автовоспроизведение музыки при первом клике по странице
         document.addEventListener('click', function initMusic() {
             if (!musicPlaying) {
                 bgMusic.play().catch(() => {});
