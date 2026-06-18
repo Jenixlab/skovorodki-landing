@@ -20,8 +20,6 @@
             --footer-text: #555;
             --modal-bg: #1a1a2e;
             --particle-opacity: 0.15;
-            --chip-bg: rgba(255, 255, 255, 0.04);
-            --chip-text: #aaa;
         }
 
         [data-theme="light"] {
@@ -39,8 +37,6 @@
             --footer-text: #999999;
             --modal-bg: #ffffff;
             --particle-opacity: 0.08;
-            --chip-bg: rgba(0, 0, 0, 0.04);
-            --chip-text: #666;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -55,10 +51,7 @@
         }
 
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .particle {
-            position: absolute; background: var(--accent); border-radius: 50%;
-            animation: float linear infinite; opacity: var(--particle-opacity);
-        }
+        .particle { position: absolute; background: var(--accent); border-radius: 50%; animation: float linear infinite; opacity: var(--particle-opacity); }
         @keyframes float {
             0% { transform: translateY(100vh) scale(0); opacity: 0; }
             10% { opacity: 0.2; }
@@ -70,8 +63,9 @@
 
         .top-controls { position: fixed; top: 20px; right: 20px; z-index: 50; display: flex; gap: 10px; }
         .ctrl-btn {
-            width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border);
-            background: var(--bg-card); color: var(--text); cursor: pointer; font-size: 20px;
+            width: 44px; height: 44px; border-radius: 50%;
+            border: 1px solid var(--border); background: var(--bg-card);
+            color: var(--text); cursor: pointer; font-size: 20px;
             display: flex; align-items: center; justify-content: center;
             transition: all 0.3s ease; backdrop-filter: blur(10px);
         }
@@ -84,10 +78,7 @@
 
         .header { text-align: center; padding: 60px 0 40px; }
         .logo { font-size: 80px; animation: bounce 2s infinite; }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
         .header h1 {
             font-size: 52px; font-weight: 900;
             background: var(--gradient);
@@ -105,45 +96,59 @@
         .section { margin: 30px 0; }
         .section-title {
             font-size: 14px; text-transform: uppercase; letter-spacing: 3px;
-            color: var(--accent); margin-bottom: 20px; padding-left: 15px;
-            border-left: 3px solid var(--accent);
+            color: var(--accent); margin-bottom: 20px; padding-left: 15px; border-left: 3px solid var(--accent);
         }
 
-        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        /* Карточки 3x3 */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+        @media (max-width: 750px) {
+            .cards-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 500px) {
+            .cards-grid { grid-template-columns: 1fr; }
+            .header h1 { font-size: 36px; }
+        }
         .card {
             background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 20px; padding: 35px 30px; text-align: center;
+            border-radius: 18px; padding: 28px 22px; text-align: center;
             transition: all 0.3s ease; position: relative; overflow: hidden;
         }
-        .card::before {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
-            transition: left 0.5s ease;
-        }
-        .card:hover::before { left: 100%; }
         .card:hover { transform: translateY(-5px); border-color: var(--border-hover); box-shadow: 0 20px 60px rgba(255, 107, 53, 0.08); }
-        .card-icon { font-size: 50px; margin-bottom: 15px; }
-        .card h3 { font-size: 22px; margin-bottom: 8px; color: var(--text-heading); }
-        .card p { color: var(--text-secondary); font-size: 14px; margin-bottom: 20px; line-height: 1.5; }
+        .card-icon { font-size: 44px; margin-bottom: 12px; }
+        .card h3 { font-size: 18px; margin-bottom: 6px; color: var(--text-heading); }
+        .card p { color: var(--text-secondary); font-size: 13px; margin-bottom: 14px; line-height: 1.5; }
         .card .badge {
-            display: inline-block; padding: 5px 12px; background: var(--badge-bg);
-            border-radius: 20px; font-size: 12px; color: var(--accent); margin: 3px;
+            display: inline-block; padding: 4px 10px; background: var(--badge-bg);
+            border-radius: 20px; font-size: 11px; color: var(--accent); margin: 2px;
         }
 
+        /* Кнопки */
         .btn {
-            display: inline-block; padding: 14px 35px; border-radius: 50px;
-            font-size: 16px; font-weight: 700; text-decoration: none; cursor: pointer;
-            transition: all 0.3s ease; border: none; letter-spacing: 1px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 14px 30px; border-radius: 50px; font-size: 15px; font-weight: 700;
+            text-decoration: none; cursor: pointer; transition: all 0.3s ease; border: none;
+            letter-spacing: 0.5px; min-width: 160px;
         }
         .btn-primary {
-            background: linear-gradient(135deg, #ff6b35, #ff8c5a); color: #fff;
+            background: var(--gradient); color: #fff;
             box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3);
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255, 107, 53, 0.4); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255, 107, 53, 0.5); }
+        .btn-vk { background: #0077ff; color: #fff; box-shadow: 0 8px 25px rgba(0, 119, 255, 0.3); }
+        .btn-vk:hover { background: #3399ff; transform: translateY(-2px); box-shadow: 0 12px 35px rgba(0, 119, 255, 0.5); }
+        .btn-gh { background: #24292e; color: #fff; box-shadow: 0 8px 25px rgba(36, 41, 46, 0.3); }
+        .btn-gh:hover { background: #444d56; transform: translateY(-2px); box-shadow: 0 12px 35px rgba(36, 41, 46, 0.5); }
         .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
         .btn-outline:hover { background: rgba(255, 107, 53, 0.1); }
-        .btn-small { padding: 10px 22px; font-size: 13px; }
+        .btn-small { padding: 10px 20px; font-size: 13px; min-width: auto; }
+        .btn-icon { font-size: 20px; }
+        .btn-center { display: flex; justify-content: center; margin-top: 20px; }
 
+        /* Скачивание */
         .download-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media (max-width: 650px) { .download-section { grid-template-columns: 1fr; } }
         .download-card {
@@ -155,68 +160,30 @@
         .download-card h3 { font-size: 20px; margin: 12px 0 6px; color: var(--text-heading); }
         .download-card .info { color: var(--text-secondary); font-size: 13px; margin-bottom: 18px; }
         .download-card .size { color: var(--accent); font-weight: 600; font-size: 13px; }
-        .download-card .version { color: var(--accent); font-size: 12px; margin-top: 8px; }
 
-        /* Секция версий */
-        .versions-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
-        .version-card {
+        /* Версии (скрытый блок) */
+        .versions-panel {
+            max-height: 0; overflow: hidden; transition: max-height 0.5s ease, margin 0.5s ease;
+            margin-top: 0;
+        }
+        .versions-panel.open { max-height: 600px; margin-top: 20px; }
+        .versions-list { display: flex; flex-direction: column; gap: 10px; }
+        .version-item {
+            display: flex; align-items: center; justify-content: space-between;
             background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 16px; padding: 25px 20px; transition: all 0.3s ease;
+            border-radius: 14px; padding: 14px 20px; transition: all 0.3s ease;
         }
-        .version-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-        .version-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-        .version-tag {
-            background: var(--gradient); color: #fff; padding: 6px 16px;
-            border-radius: 20px; font-weight: 700; font-size: 14px;
-        }
-        .version-date { color: var(--text-secondary); font-size: 12px; }
-        .version-card ul { list-style: none; }
-        .version-card li {
-            color: var(--text-secondary); font-size: 13px; padding: 4px 0;
-            padding-left: 18px; position: relative;
-        }
-        .version-card li::before {
-            content: '▸'; position: absolute; left: 0; color: var(--accent);
-        }
+        .version-item:hover { border-color: var(--border-hover); }
+        .version-num { font-size: 18px; font-weight: 900; color: var(--accent); min-width: 50px; }
+        .version-desc { flex: 1; padding: 0 20px; color: var(--text); font-size: 14px; }
+        .version-date { color: var(--text-secondary); font-size: 12px; white-space: nowrap; }
 
         /* Соцсети */
-        .social-links { display: flex; justify-content: center; gap: 15px; margin: 20px 0; }
-        .social-btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 12px 24px; border-radius: 50px;
-            font-size: 15px; font-weight: 600; text-decoration: none;
-            transition: all 0.3s ease; cursor: pointer;
-        }
-        .social-vk {
-            background: #0077ff; color: #fff;
-            box-shadow: 0 4px 20px rgba(0, 119, 255, 0.3);
-        }
-        .social-vk:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 119, 255, 0.4); }
-        .social-gh {
-            background: #24292e; color: #fff;
-            box-shadow: 0 4px 20px rgba(36, 41, 46, 0.3);
-        }
-        .social-gh:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(36, 41, 46, 0.4); }
+        .social-links { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
 
         .footer { text-align: center; padding: 50px 0 30px; color: var(--footer-text); font-size: 14px; }
         .footer a { color: var(--accent); text-decoration: none; }
         .footer .heart { color: #ff4444; }
-
-        .modal-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8); z-index: 100;
-            justify-content: center; align-items: center;
-        }
-        .modal-overlay.active { display: flex; }
-        .modal {
-            background: var(--modal-bg); border: 1px solid var(--border-hover);
-            border-radius: 20px; padding: 40px; text-align: center;
-            max-width: 450px; width: 90%;
-        }
-        .modal h2 { font-size: 28px; margin-bottom: 10px; color: var(--text-heading); }
-        .modal .emoji { font-size: 60px; }
-        .modal p { color: var(--text-secondary); margin: 15px 0; line-height: 1.6; }
-        .modal .btn { margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -241,59 +208,9 @@
             <div class="author-badge">
                 Разработчик: <span class="author-name">Jenix (Естелин Савелий)</span>
             </div>
-            <div class="social-links">
-                <a href="https://vk.com/sav_fujiyama" target="_blank" class="social-btn social-vk">
-                    <span>🔷</span> ВКонтакте
-                </a>
-                <a href="https://github.com/Jenixlab" target="_blank" class="social-btn social-gh">
-                    <span>🔶</span> GitHub
-                </a>
-            </div>
         </header>
 
-        <div class="section">
-            <h2 class="section-title">Возможности приложения</h2>
-            <div class="cards">
-                <div class="card">
-                    <div class="card-icon">📝</div>
-                    <h3>9 полей ввода</h3>
-                    <p>Модель, бренд, материал основы, внутреннее покрытие, толщина дна, толщина стенок, объём, количество, цена</p>
-                    <span class="badge">Полный учёт</span>
-                </div>
-                <div class="card">
-                    <div class="card-icon">📊</div>
-                    <h3>Excel-файл</h3>
-                    <p>Сохранение всех данных в отдельный .xlsx файл для постоянного хранения и анализа</p>
-                    <span class="badge">Экспорт</span>
-                    <span class="badge">Импорт</span>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🌙</div>
-                    <h3>Две темы</h3>
-                    <p>Переключение между тёмной и светлой темой в один клик. Лаконичный Material Design</p>
-                    <span class="badge">UI/UX</span>
-                </div>
-                <div class="card">
-                    <div class="card-icon">✨</div>
-                    <h3>Генерация</h3>
-                    <p>Автоматическая генерация 150 случайных моделей сковородок для тестирования</p>
-                    <span class="badge">Demo-данные</span>
-                </div>
-                <div class="card">
-                    <div class="card-icon">📱</div>
-                    <h3>Android</h3>
-                    <p>Нативное мобильное приложение на Kotlin с Jetpack Compose и Material 3</p>
-                    <span class="badge">APK</span>
-                </div>
-                <div class="card">
-                    <div class="card-icon">💻</div>
-                    <h3>Windows</h3>
-                    <p>Десктопное приложение на Python с Tkinter. Запускается без установки</p>
-                    <span class="badge">EXE</span>
-                </div>
-            </div>
-        </div>
-
+        <!-- Скачать -->
         <div class="section">
             <h2 class="section-title">Скачать приложение</h2>
             <div class="download-section">
@@ -302,145 +219,187 @@
                     <h3>Android (APK)</h3>
                     <p class="info">Мобильное приложение на Kotlin<br>Jetpack Compose • Material 3</p>
                     <p class="size">~15 MB • Android 8.0+</p>
-                    <p class="version">Версия 1.1</p>
                     <br>
-                    <a href="files/app-debug.apk" class="btn btn-primary" download>⬇ Скачать APK</a>
+                    <a href="files/app-debug.apk" class="btn btn-primary" download>
+                        <span>⬇</span> Скачать APK
+                    </a>
                 </div>
                 <div class="download-card">
                     <div class="icon">💻</div>
                     <h3>Windows (EXE)</h3>
                     <p class="info">Десктопное приложение на Python<br>Tkinter • openpyxl</p>
                     <p class="size">~25 MB • Windows 10/11</p>
-                    <p class="version">Версия 1.1</p>
                     <br>
-                    <a href="files/Сковородки.exe" class="btn btn-primary" download>⬇ Скачать EXE</a>
+                    <a href="files/Сковородки.exe" class="btn btn-primary" download>
+                        <span>⬇</span> Скачать EXE
+                    </a>
                 </div>
             </div>
         </div>
 
+        <!-- Возможности (3x3) -->
+        <div class="section">
+            <h2 class="section-title">Возможности приложения</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">📝</div>
+                    <h3>9 полей ввода</h3>
+                    <p>Модель, бренд, материал, покрытие, толщина, объём, количество, цена</p>
+                    <span class="badge">Полный учёт</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>Excel</h3>
+                    <p>Сохранение в .xlsx, импорт и экспорт данных</p>
+                    <span class="badge">Экспорт</span>
+                    <span class="badge">Импорт</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌙</div>
+                    <h3>Две темы</h3>
+                    <p>Тёмная и светлая тема в один клик</p>
+                    <span class="badge">UI/UX</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✨</div>
+                    <h3>Генерация</h3>
+                    <p>150 случайных моделей для тестирования</p>
+                    <span class="badge">Demo</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔊</div>
+                    <h3>Звуки</h3>
+                    <p>Приятные звуки кнопок с возможностью отключения</p>
+                    <span class="badge">Sound</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📋</div>
+                    <h3>Сортировка</h3>
+                    <p>По названию, бренду, цене и количеству</p>
+                    <span class="badge">Сортировка</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📱</div>
+                    <h3>Android</h3>
+                    <p>Нативный Kotlin + Jetpack Compose + Material 3</p>
+                    <span class="badge">APK</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💻</div>
+                    <h3>Windows</h3>
+                    <p>Python + Tkinter, запуск без установки</p>
+                    <span class="badge">EXE</span>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💾</div>
+                    <h3>Автосохранение</h3>
+                    <p>Данные сохраняются при выходе из приложения</p>
+                    <span class="badge">Save</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- История версий (скрыта) -->
         <div class="section">
             <h2 class="section-title">История версий</h2>
-            <div class="versions-grid">
-                <div class="version-card">
-                    <div class="version-header">
-                        <span class="version-tag">v1.1</span>
-                        <span class="version-date">Июнь 2026</span>
+            <div class="versions-panel" id="versionsPanel">
+                <div class="versions-list">
+                    <div class="version-item">
+                        <span class="version-num">v1.1</span>
+                        <span class="version-desc">Добавлен раздел версий лендинга, ссылки стилизованы под полноценные кнопки</span>
+                        <span class="version-date">18.06.2026</span>
                     </div>
-                    <ul>
-                        <li>Добавлен раздел истории версий</li>
-                        <li>Кнопки соцсетей ВК и GitHub</li>
-                        <li>Улучшен дизайн карточек</li>
-                    </ul>
-                </div>
-                <div class="version-card">
-                    <div class="version-header">
-                        <span class="version-tag">v1.0</span>
-                        <span class="version-date">Июнь 2026</span>
+                    <div class="version-item">
+                        <span class="version-num">v1.0</span>
+                        <span class="version-desc">Добавлены ссылки на ВК и GitHub</span>
+                        <span class="version-date">17.06.2026</span>
                     </div>
-                    <ul>
-                        <li>Добавлены ссылки на ВК и GitHub</li>
-                        <li>Опубликован лендинг</li>
-                        <li>Файлы доступны для скачивания</li>
-                    </ul>
-                </div>
-                <div class="version-card">
-                    <div class="version-header">
-                        <span class="version-tag">v0.9</span>
-                        <span class="version-date">Май 2026</span>
+                    <div class="version-item">
+                        <span class="version-num">v0.9</span>
+                        <span class="version-desc">Первая версия приложения</span>
+                        <span class="version-date">16.06.2026</span>
                     </div>
-                    <ul>
-                        <li>Первая версия лендинга</li>
-                        <li>Базовый дизайн и структура</li>
-                        <li>Подготовка к публикации</li>
-                    </ul>
                 </div>
+            </div>
+            <div class="btn-center">
+                <button class="btn btn-outline" id="versionsBtn" onclick="toggleVersions()">
+                    📋 Показать историю версий
+                </button>
+            </div>
+        </div>
+
+        <!-- Связь -->
+        <div class="section">
+            <h2 class="section-title">Связаться с разработчиком</h2>
+            <div class="social-links">
+                <a href="https://vk.com/sav_fujiyama" target="_blank" class="btn btn-vk">
+                    <span class="btn-icon">💬</span> ВКонтакте
+                </a>
+                <a href="https://github.com/jenix-sk" target="_blank" class="btn btn-gh">
+                    <span class="btn-icon">🐙</span> GitHub
+                </a>
             </div>
         </div>
 
         <footer class="footer">
             <p>Сделано с <span class="heart">❤️</span> • Jenix (Естелин Савелий) • 2026</p>
-            <p>
-                <a href="https://vk.com/sav_fujiyama" target="_blank">ВКонтакте</a> &nbsp;|&nbsp;
-                <a href="https://github.com/Jenixlab" target="_blank">GitHub</a>
-            </p>
         </footer>
     </div>
 
-    <div class="modal-overlay" id="modalAuthor">
-        <div class="modal">
-            <div class="emoji">👨‍💻</div>
-            <h2>Jenix</h2>
-            <p style="color: var(--accent); font-weight: 600;">Естелин Савелий</p>
-            <p>Разработчик мобильных и десктопных приложений.<br>Специализация: Kotlin, Python, Compose, Tkinter.</p>
-            <button class="btn btn-primary btn-small" onclick="closeModal()">Закрыть</button>
-        </div>
-    </div>
-
     <script>
-        const particlesContainer = document.getElementById('particles');
+        // Частицы
+        const pc = document.getElementById('particles');
         for (let i = 0; i < 40; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            const size = Math.random() * 6 + 2;
-            particle.style.width = size + 'px';
-            particle.style.height = size + 'px';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDuration = Math.random() * 12 + 8 + 's';
-            particle.style.animationDelay = Math.random() * 10 + 's';
-            particlesContainer.appendChild(particle);
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const s = Math.random() * 6 + 2;
+            p.style.width = s + 'px'; p.style.height = s + 'px';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = Math.random() * 12 + 8 + 's';
+            p.style.animationDelay = Math.random() * 10 + 's';
+            pc.appendChild(p);
         }
 
+        // Тема
         function toggleTheme() {
             const html = document.documentElement;
             const btn = document.getElementById('themeBtn');
-            const current = html.getAttribute('data-theme');
-            if (current === 'light') {
-                html.removeAttribute('data-theme');
-                btn.textContent = '🌙';
+            if (html.getAttribute('data-theme') === 'light') {
+                html.removeAttribute('data-theme'); btn.textContent = '🌙';
                 localStorage.setItem('theme', 'dark');
             } else {
-                html.setAttribute('data-theme', 'light');
-                btn.textContent = '☀️';
+                html.setAttribute('data-theme', 'light'); btn.textContent = '☀️';
                 localStorage.setItem('theme', 'light');
             }
         }
-
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
+        if (localStorage.getItem('theme') === 'light') {
             document.documentElement.setAttribute('data-theme', 'light');
             document.getElementById('themeBtn').textContent = '☀️';
         }
 
+        // Версии
+        function toggleVersions() {
+            const panel = document.getElementById('versionsPanel');
+            const btn = document.getElementById('versionsBtn');
+            panel.classList.toggle('open');
+            btn.textContent = panel.classList.contains('open')
+                ? '📋 Скрыть историю версий'
+                : '📋 Показать историю версий';
+        }
+
+        // Музыка
         const bgMusic = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         bgMusic.volume = 0.3;
-        let musicPlaying = false;
-
+        let playing = false;
         function toggleMusic() {
-            if (musicPlaying) {
-                bgMusic.pause();
-                musicBtn.textContent = '🎵';
-                musicBtn.classList.remove('playing');
-            } else {
-                bgMusic.play().catch(() => {});
-                musicBtn.textContent = '🎶';
-                musicBtn.classList.add('playing');
-            }
-            musicPlaying = !musicPlaying;
+            if (playing) { bgMusic.pause(); musicBtn.textContent = '🎵'; musicBtn.classList.remove('playing'); }
+            else { bgMusic.play().catch(() => {}); musicBtn.textContent = '🎶'; musicBtn.classList.add('playing'); }
+            playing = !playing;
         }
-
-        document.addEventListener('click', function initMusic() {
-            if (!musicPlaying) {
-                bgMusic.play().catch(() => {});
-                musicPlaying = true;
-                musicBtn.textContent = '🎶';
-                musicBtn.classList.add('playing');
-            }
+        document.addEventListener('click', function start() {
+            if (!playing) { bgMusic.play().catch(() => {}); playing = true; musicBtn.textContent = '🎶'; musicBtn.classList.add('playing'); }
         }, { once: true });
-
-        function closeModal() {
-            document.getElementById('modalAuthor').classList.remove('active');
-        }
     </script>
 
 </body>
