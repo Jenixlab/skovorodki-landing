@@ -19,8 +19,6 @@
             --gradient: linear-gradient(135deg, #ff6b35, #ff8c5a, #ffaa00);
             --badge-bg: rgba(255, 107, 53, 0.15);
             --footer-text: #555;
-            --modal-bg: #1a1a2e;
-            --particle-opacity: 0.15;
             --slider-track: #333;
             --slider-fill: #ff6b35;
         }
@@ -38,8 +36,6 @@
             --gradient: linear-gradient(135deg, #e65100, #ff6d00, #ff9800);
             --badge-bg: rgba(255, 107, 53, 0.1);
             --footer-text: #999999;
-            --modal-bg: #ffffff;
-            --particle-opacity: 0.08;
             --slider-track: #ddd;
             --slider-fill: #e65100;
         }
@@ -56,7 +52,8 @@
         }
 
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .particle { position: absolute; background: var(--accent); border-radius: 50%; animation: float linear infinite; opacity: var(--particle-opacity); }
+        .particle { position: absolute; background: var(--accent); border-radius: 50%; animation: float linear infinite; opacity: 0.15; }
+        [data-theme="light"] .particle { opacity: 0.08; }
         @keyframes float {
             0% { transform: translateY(100vh) scale(0); opacity: 0; }
             10% { opacity: 0.2; }
@@ -139,15 +136,13 @@
             color: var(--accent); margin-bottom: 20px; padding-left: 15px; border-left: 3px solid var(--accent);
         }
 
-        .cards-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
-        }
+        .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
         @media (max-width: 750px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 500px) { .cards-grid { grid-template-columns: 1fr; } .header h1 { font-size: 36px; } }
         .card {
             background: var(--bg-card); border: 1px solid var(--border);
             border-radius: 18px; padding: 28px 22px; text-align: center;
-            transition: all 0.3s ease; position: relative; overflow: hidden;
+            transition: all 0.3s ease;
         }
         .card:hover { transform: translateY(-5px); border-color: var(--border-hover); box-shadow: 0 20px 60px rgba(255, 107, 53, 0.08); }
         .card-icon { font-size: 44px; margin-bottom: 12px; }
@@ -163,15 +158,14 @@
         }
         .btn-primary { background: var(--gradient); color: #fff; box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3); }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255, 107, 53, 0.5); }
-        .btn-vk { background: #0077ff; color: #fff; box-shadow: 0 8px 25px rgba(0, 119, 255, 0.3); }
-        .btn-vk:hover { background: #3399ff; transform: translateY(-2px); box-shadow: 0 12px 35px rgba(0, 119, 255, 0.5); }
-        .btn-tg { background: #0088cc; color: #fff; box-shadow: 0 8px 25px rgba(0, 136, 204, 0.3); }
-        .btn-tg:hover { background: #00a8e8; transform: translateY(-2px); box-shadow: 0 12px 35px rgba(0, 136, 204, 0.5); }
-        .btn-gh { background: #24292e; color: #fff; box-shadow: 0 8px 25px rgba(36, 41, 46, 0.3); }
-        .btn-gh:hover { background: #444d56; transform: translateY(-2px); box-shadow: 0 12px 35px rgba(36, 41, 46, 0.5); }
+        .btn-vk { background: #0077ff; color: #fff; }
+        .btn-vk:hover { background: #3399ff; }
+        .btn-tg { background: #0088cc; color: #fff; }
+        .btn-tg:hover { background: #00a8e8; }
+        .btn-gh { background: #24292e; color: #fff; }
+        .btn-gh:hover { background: #444d56; }
         .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
         .btn-outline:hover { background: rgba(255, 107, 53, 0.1); }
-        .btn-small { padding: 10px 20px; font-size: 13px; min-width: auto; }
         .btn-icon { font-size: 20px; }
         .btn-center { display: flex; justify-content: center; margin-top: 20px; }
 
@@ -187,7 +181,7 @@
         .download-card .info { color: var(--text-secondary); font-size: 13px; margin-bottom: 18px; }
         .download-card .size { color: var(--accent); font-weight: 600; font-size: 13px; }
 
-        .versions-panel { max-height: 0; overflow: hidden; transition: max-height 0.5s ease, margin 0.5s ease; margin-top: 0; }
+        .versions-panel { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
         .versions-panel.open { max-height: 800px; margin-top: 20px; }
         .versions-list { display: flex; flex-direction: column; gap: 10px; }
         .version-item {
@@ -203,7 +197,6 @@
         .social-links { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
 
         .footer { text-align: center; padding: 50px 0 30px; color: var(--footer-text); font-size: 14px; }
-        .footer a { color: var(--accent); text-decoration: none; }
         .footer .heart { color: #ff4444; }
     </style>
 </head>
@@ -238,8 +231,8 @@
 
         <header class="header">
             <div class="logo">🍳</div>
-            <h1>СКОВОРОДКИ</h1>
-            <p class="subtitle">Учёт товаров • Мобильная и десктопная версия</p>
+            <h1>SkovUchet</h1>
+            <p class="subtitle">Учёт сковородок • Мобильная и десктопная версия</p>
             <div class="author-badge">
                 Разработчик: <span class="author-name">Jenix (Естелин Савелий)</span>
             </div>
@@ -251,11 +244,11 @@
             <div class="download-section">
                 <div class="download-card">
                     <div class="icon">📱</div>
-                    <h3>Android (APK)</h3>
+                    <h3>SkovUchet (Android)</h3>
                     <p class="info">Мобильное приложение на Kotlin<br>Jetpack Compose • Material 3</p>
                     <p class="size">~15 MB • Android 8.0+</p>
                     <br>
-                    <a href="files/app-debug.apk" class="btn btn-primary" download="app-debug.apk">
+                    <a href="./files/SkovUchet.apk" class="btn btn-primary" download>
                         <span>⬇</span> Скачать APK
                     </a>
                 </div>
@@ -276,61 +269,15 @@
         <div class="section">
             <h2 class="section-title">Возможности приложения</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <div class="card-icon">📝</div>
-                    <h3>9 полей ввода</h3>
-                    <p>Модель, бренд, материал, покрытие, толщина, объём, количество, цена</p>
-                    <span class="badge">Полный учёт</span>
-                </div>
-                <div class="card">
-                    <div class="card-icon">📊</div>
-                    <h3>Excel</h3>
-                    <p>Сохранение в .xlsx, импорт и экспорт данных</p>
-                    <span class="badge">Экспорт</span>
-                    <span class="badge">Импорт</span>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🌙</div>
-                    <h3>Две темы</h3>
-                    <p>Тёмная и светлая тема в один клик</p>
-                    <span class="badge">UI/UX</span>
-                </div>
-                <div class="card">
-                    <div class="card-icon">✨</div>
-                    <h3>Генерация</h3>
-                    <p>150 случайных моделей для тестирования</p>
-                    <span class="badge">Demo</span>
-                </div>
-                <div class="card">
-                    <div class="card-icon">🔊</div>
-                    <h3>Звуки</h3>
-                    <p>Приятные звуки кнопок с возможностью отключения</p>
-                    <span class="badge">Sound</span>
-                </div>
-                <div class="card">
-                    <div class="card-icon">📋</div>
-                    <h3>Сортировка</h3>
-                    <p>По названию, бренду, цене и количеству</p>
-                    <span class="badge">Сортировка</span>
-                </div>
-                <div class="card">
-                    <div class="card-icon">📱</div>
-                    <h3>Android</h3>
-                    <p>Нативный Kotlin + Jetpack Compose + Material 3</p>
-                    <span class="badge">APK</span>
-                </div>
-                <div class="card">
-                    <div class="card-icon">💻</div>
-                    <h3>Windows</h3>
-                    <p>Python + Tkinter, запуск без установки</p>
-                    <span class="badge">ZIP</span>
-                </div>
-                <div class="card">
-                    <div class="card-icon">💾</div>
-                    <h3>Автосохранение</h3>
-                    <p>Данные сохраняются при выходе из приложения</p>
-                    <span class="badge">Save</span>
-                </div>
+                <div class="card"><div class="card-icon">📝</div><h3>9 полей ввода</h3><p>Модель, бренд, материал, покрытие, толщина, объём, количество, цена</p><span class="badge">Полный учёт</span></div>
+                <div class="card"><div class="card-icon">📊</div><h3>Excel</h3><p>Сохранение в .xlsx, импорт и экспорт данных</p><span class="badge">Экспорт</span><span class="badge">Импорт</span></div>
+                <div class="card"><div class="card-icon">🌙</div><h3>Две темы</h3><p>Тёмная и светлая тема в один клик</p><span class="badge">UI/UX</span></div>
+                <div class="card"><div class="card-icon">✨</div><h3>Генерация</h3><p>150 случайных моделей для тестирования</p><span class="badge">Demo</span></div>
+                <div class="card"><div class="card-icon">🔊</div><h3>Звуки</h3><p>Приятные звуки кнопок с возможностью отключения</p><span class="badge">Sound</span></div>
+                <div class="card"><div class="card-icon">📋</div><h3>Сортировка</h3><p>По названию, бренду, цене и количеству</p><span class="badge">Сортировка</span></div>
+                <div class="card"><div class="card-icon">📱</div><h3>Android</h3><p>Нативный Kotlin + Jetpack Compose + Material 3</p><span class="badge">APK</span></div>
+                <div class="card"><div class="card-icon">💻</div><h3>Windows</h3><p>Python + Tkinter, запуск без установки</p><span class="badge">ZIP</span></div>
+                <div class="card"><div class="card-icon">💾</div><h3>Автосохранение</h3><p>Данные сохраняются при выходе из приложения</p><span class="badge">Save</span></div>
             </div>
         </div>
 
@@ -339,50 +286,25 @@
             <h2 class="section-title">История версий</h2>
             <div class="versions-panel" id="versionsPanel">
                 <div class="versions-list">
-                    <div class="version-item">
-                        <span class="version-num">v1.3</span>
-                        <span class="version-desc">Обновлена музыка на сайте. В разделе «связаться с разработчиком» добавлена ссылка на Telegram, вместо GitHub. Добавлен новый раздел «посмотреть другие работы», в который была перемещена ссылка на GitHub</span>
-                        <span class="version-date">19.06.2026</span>
-                    </div>
-                    <div class="version-item">
-                        <span class="version-num">v1.2</span>
-                        <span class="version-desc">Добавлены настройки музыки: проигрывание сначала и ползунок громкости</span>
-                        <span class="version-date">18.06.2026</span>
-                    </div>
-                    <div class="version-item">
-                        <span class="version-num">v1.1</span>
-                        <span class="version-desc">Добавлен раздел версий лендинга, ссылки стилизованы под полноценные кнопки</span>
-                        <span class="version-date">18.06.2026</span>
-                    </div>
-                    <div class="version-item">
-                        <span class="version-num">v1.0</span>
-                        <span class="version-desc">Добавлены ссылки на ВК и GitHub</span>
-                        <span class="version-date">17.06.2026</span>
-                    </div>
-                    <div class="version-item">
-                        <span class="version-num">v0.9</span>
-                        <span class="version-desc">Первая версия приложения</span>
-                        <span class="version-date">16.06.2026</span>
-                    </div>
+                    <div class="version-item"><span class="version-num">v1.4</span><span class="version-desc">Приложение переименовано в SkovUchet. Обновлён APK.</span><span class="version-date">19.06.2026</span></div>
+                    <div class="version-item"><span class="version-num">v1.3</span><span class="version-desc">Обновлена музыка на сайте. Добавлена ссылка на Telegram. GitHub вынесен в отдельный раздел.</span><span class="version-date">19.06.2026</span></div>
+                    <div class="version-item"><span class="version-num">v1.2</span><span class="version-desc">Добавлены настройки музыки: проигрывание сначала и ползунок громкости</span><span class="version-date">18.06.2026</span></div>
+                    <div class="version-item"><span class="version-num">v1.1</span><span class="version-desc">Добавлен раздел версий лендинга, ссылки стилизованы под полноценные кнопки</span><span class="version-date">18.06.2026</span></div>
+                    <div class="version-item"><span class="version-num">v1.0</span><span class="version-desc">Добавлены ссылки на ВК и GitHub</span><span class="version-date">17.06.2026</span></div>
+                    <div class="version-item"><span class="version-num">v0.9</span><span class="version-desc">Первая версия приложения</span><span class="version-date">16.06.2026</span></div>
                 </div>
             </div>
             <div class="btn-center">
-                <button class="btn btn-outline" id="versionsBtn" onclick="toggleVersions()">
-                    📋 Показать историю версий
-                </button>
+                <button class="btn btn-outline" id="versionsBtn" onclick="toggleVersions()">📋 Показать историю версий</button>
             </div>
         </div>
 
-        <!-- Связь с разработчиком -->
+        <!-- Связь -->
         <div class="section">
             <h2 class="section-title">Связаться с разработчиком</h2>
             <div class="social-links">
-                <a href="https://vk.com/sav_fujiyama" target="_blank" class="btn btn-vk">
-                    <span class="btn-icon">💬</span> ВКонтакте
-                </a>
-                <a href="https://t.me/SaveliyFujiyama" target="_blank" class="btn btn-tg">
-                    <span class="btn-icon">✈️</span> Telegram
-                </a>
+                <a href="https://vk.com/sav_fujiyama" target="_blank" class="btn btn-vk"><span class="btn-icon">💬</span> ВКонтакте</a>
+                <a href="https://t.me/SaveliyFujiyama" target="_blank" class="btn btn-tg"><span class="btn-icon">✈️</span> Telegram</a>
             </div>
         </div>
 
@@ -390,9 +312,7 @@
         <div class="section">
             <h2 class="section-title">Посмотреть другие работы</h2>
             <div class="social-links">
-                <a href="https://github.com/Jenixlab" target="_blank" class="btn btn-gh">
-                    <span class="btn-icon">🐙</span> GitHub
-                </a>
+                <a href="https://github.com/Jenixlab" target="_blank" class="btn btn-gh"><span class="btn-icon">🐙</span> GitHub</a>
             </div>
         </div>
 
@@ -404,8 +324,7 @@
     <script>
         const pc = document.getElementById('particles');
         for (let i = 0; i < 40; i++) {
-            const p = document.createElement('div');
-            p.className = 'particle';
+            const p = document.createElement('div'); p.className = 'particle';
             const s = Math.random() * 6 + 2;
             p.style.width = s + 'px'; p.style.height = s + 'px';
             p.style.left = Math.random() * 100 + '%';
@@ -434,14 +353,10 @@
             const panel = document.getElementById('versionsPanel');
             const btn = document.getElementById('versionsBtn');
             panel.classList.toggle('open');
-            btn.textContent = panel.classList.contains('open')
-                ? '📋 Скрыть историю версий'
-                : '📋 Показать историю версий';
+            btn.textContent = panel.classList.contains('open') ? '📋 Скрыть историю версий' : '📋 Показать историю версий';
         }
 
-        function toggleSettings() {
-            document.getElementById('settingsPanel').classList.toggle('open');
-        }
+        function toggleSettings() { document.getElementById('settingsPanel').classList.toggle('open'); }
 
         const bgMusic = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
@@ -450,14 +365,11 @@
         const restartCheckbox = document.getElementById('restartCheckbox');
         let playing = false;
 
-        const savedVolume = localStorage.getItem('musicVolume');
-        const savedRestart = localStorage.getItem('musicRestart');
-        if (savedVolume !== null) {
-            bgMusic.volume = parseInt(savedVolume) / 100;
-            volumeSlider.value = savedVolume;
-            volumeLabel.textContent = savedVolume + '%';
-        } else { bgMusic.volume = 0.3; }
-        if (savedRestart === 'true') { restartCheckbox.checked = true; }
+        const sv = localStorage.getItem('musicVolume');
+        const sr = localStorage.getItem('musicRestart');
+        if (sv !== null) { bgMusic.volume = parseInt(sv) / 100; volumeSlider.value = sv; volumeLabel.textContent = sv + '%'; }
+        else { bgMusic.volume = 0.3; }
+        if (sr === 'true') { restartCheckbox.checked = true; }
 
         function updateVolume(val) { bgMusic.volume = val / 100; volumeLabel.textContent = val + '%'; saveSettings(); }
         function changeVolume(delta) { let v = parseInt(volumeSlider.value) + delta; if (v < 0) v = 0; if (v > 100) v = 100; volumeSlider.value = v; updateVolume(v); }
