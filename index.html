@@ -255,7 +255,7 @@
                     <p class="info">Мобильное приложение на Kotlin<br>Jetpack Compose • Material 3</p>
                     <p class="size">~15 MB • Android 8.0+</p>
                     <br>
-                    <a href="files/app-debug.apk?v=2" class="btn btn-primary" download>
+                    <a href="files/app-debug.apk" class="btn btn-primary" download="app-debug.apk">
                         <span>⬇</span> Скачать APK
                     </a>
                 </div>
@@ -265,7 +265,7 @@
                     <p class="info">Десктопное приложение на Python<br>Tkinter • openpyxl</p>
                     <p class="size">~12 MB • Windows 10/11</p>
                     <br>
-                    <a href="files/SkovUchet%20(2).zip?v=2" class="btn btn-primary" download>
+                    <a href="./files/SkovUchet.zip" class="btn btn-primary" download>
                         <span>⬇</span> Скачать ZIP
                     </a>
                 </div>
@@ -402,7 +402,6 @@
     </div>
 
     <script>
-        // Частицы
         const pc = document.getElementById('particles');
         for (let i = 0; i < 40; i++) {
             const p = document.createElement('div');
@@ -415,7 +414,6 @@
             pc.appendChild(p);
         }
 
-        // Тема
         function toggleTheme() {
             const html = document.documentElement;
             const btn = document.getElementById('themeBtn');
@@ -432,7 +430,6 @@
             document.getElementById('themeBtn').textContent = '☀️';
         }
 
-        // Версии
         function toggleVersions() {
             const panel = document.getElementById('versionsPanel');
             const btn = document.getElementById('versionsBtn');
@@ -442,12 +439,10 @@
                 : '📋 Показать историю версий';
         }
 
-        // Настройки
         function toggleSettings() {
             document.getElementById('settingsPanel').classList.toggle('open');
         }
 
-        // Музыка
         const bgMusic = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
         const volumeSlider = document.getElementById('volumeSlider');
@@ -461,45 +456,16 @@
             bgMusic.volume = parseInt(savedVolume) / 100;
             volumeSlider.value = savedVolume;
             volumeLabel.textContent = savedVolume + '%';
-        } else {
-            bgMusic.volume = 0.3;
-        }
-        if (savedRestart === 'true') {
-            restartCheckbox.checked = true;
-        }
+        } else { bgMusic.volume = 0.3; }
+        if (savedRestart === 'true') { restartCheckbox.checked = true; }
 
-        function updateVolume(val) {
-            bgMusic.volume = val / 100;
-            volumeLabel.textContent = val + '%';
-            saveSettings();
-        }
-
-        function changeVolume(delta) {
-            let val = parseInt(volumeSlider.value) + delta;
-            if (val < 0) val = 0;
-            if (val > 100) val = 100;
-            volumeSlider.value = val;
-            updateVolume(val);
-        }
-
-        function saveSettings() {
-            localStorage.setItem('musicVolume', volumeSlider.value);
-            localStorage.setItem('musicRestart', restartCheckbox.checked);
-        }
+        function updateVolume(val) { bgMusic.volume = val / 100; volumeLabel.textContent = val + '%'; saveSettings(); }
+        function changeVolume(delta) { let v = parseInt(volumeSlider.value) + delta; if (v < 0) v = 0; if (v > 100) v = 100; volumeSlider.value = v; updateVolume(v); }
+        function saveSettings() { localStorage.setItem('musicVolume', volumeSlider.value); localStorage.setItem('musicRestart', restartCheckbox.checked); }
 
         function toggleMusic() {
-            if (playing) {
-                bgMusic.pause();
-                musicBtn.textContent = '🎵';
-                musicBtn.classList.remove('playing');
-            } else {
-                if (restartCheckbox.checked) {
-                    bgMusic.currentTime = 0;
-                }
-                bgMusic.play().catch(() => {});
-                musicBtn.textContent = '🎶';
-                musicBtn.classList.add('playing');
-            }
+            if (playing) { bgMusic.pause(); musicBtn.textContent = '🎵'; musicBtn.classList.remove('playing'); }
+            else { if (restartCheckbox.checked) bgMusic.currentTime = 0; bgMusic.play().catch(() => {}); musicBtn.textContent = '🎶'; musicBtn.classList.add('playing'); }
             playing = !playing;
         }
     </script>
