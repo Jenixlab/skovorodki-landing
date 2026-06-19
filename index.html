@@ -81,7 +81,6 @@
             50% { box-shadow: 0 0 20px 10px rgba(255, 107, 53, 0.1); }
         }
 
-        /* Панель настроек */
         .settings-panel {
             position: fixed; top: 70px; right: 20px; z-index: 49;
             background: var(--bg-card); border: 1px solid var(--border);
@@ -166,6 +165,8 @@
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255, 107, 53, 0.5); }
         .btn-vk { background: #0077ff; color: #fff; box-shadow: 0 8px 25px rgba(0, 119, 255, 0.3); }
         .btn-vk:hover { background: #3399ff; transform: translateY(-2px); box-shadow: 0 12px 35px rgba(0, 119, 255, 0.5); }
+        .btn-tg { background: #0088cc; color: #fff; box-shadow: 0 8px 25px rgba(0, 136, 204, 0.3); }
+        .btn-tg:hover { background: #00a8e8; transform: translateY(-2px); box-shadow: 0 12px 35px rgba(0, 136, 204, 0.5); }
         .btn-gh { background: #24292e; color: #fff; box-shadow: 0 8px 25px rgba(36, 41, 46, 0.3); }
         .btn-gh:hover { background: #444d56; transform: translateY(-2px); box-shadow: 0 12px 35px rgba(36, 41, 46, 0.5); }
         .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
@@ -187,7 +188,7 @@
         .download-card .size { color: var(--accent); font-weight: 600; font-size: 13px; }
 
         .versions-panel { max-height: 0; overflow: hidden; transition: max-height 0.5s ease, margin 0.5s ease; margin-top: 0; }
-        .versions-panel.open { max-height: 600px; margin-top: 20px; }
+        .versions-panel.open { max-height: 800px; margin-top: 20px; }
         .versions-list { display: flex; flex-direction: column; gap: 10px; }
         .version-item {
             display: flex; align-items: center; justify-content: space-between;
@@ -216,7 +217,6 @@
         <button class="ctrl-btn" id="themeBtn" onclick="toggleTheme()" title="Сменить тему">🌙</button>
     </div>
 
-    <!-- Панель настроек -->
     <div class="settings-panel" id="settingsPanel">
         <label>
             <input type="checkbox" id="restartCheckbox" onchange="saveSettings()">
@@ -334,16 +334,40 @@
             </div>
         </div>
 
+        <!-- Связь с разработчиком -->
+        <div class="section">
+            <h2 class="section-title">Связаться с разработчиком</h2>
+            <div class="social-links">
+                <a href="https://vk.com/sav_fujiyama" target="_blank" class="btn btn-vk">
+                    <span class="btn-icon">💬</span> ВКонтакте
+                </a>
+                <a href="https://t.me/jenix_dev" target="_blank" class="btn btn-tg">
+                    <span class="btn-icon">✈️</span> Telegram
+                </a>
+            </div>
+        </div>
+
+        <!-- Другие работы -->
+        <div class="section">
+            <h2 class="section-title">Посмотреть другие работы</h2>
+            <div class="social-links">
+                <a href="https://github.com/jenix-sk" target="_blank" class="btn btn-gh">
+                    <span class="btn-icon">🐙</span> GitHub
+                </a>
+            </div>
+        </div>
+
         <!-- История версий -->
         <div class="section">
             <h2 class="section-title">История версий</h2>
             <div class="versions-panel" id="versionsPanel">
                 <div class="versions-list">
-            <div class="version-item">
+                    <div class="version-item">
                         <span class="version-num">v1.3</span>
                         <span class="version-desc">Обновлена музыка на сайте</span>
-                        <span class="version-date">17.06.2026</span>
+                        <span class="version-date">19.06.2026</span>
                     </div>
+                    <div class="version-item">
                         <span class="version-num">v1.2</span>
                         <span class="version-desc">Добавлены настройки музыки: проигрывание сначала и ползунок громкости</span>
                         <span class="version-date">18.06.2026</span>
@@ -355,12 +379,12 @@
                     </div>
                     <div class="version-item">
                         <span class="version-num">v1.0</span>
-                        <span class="version-desc">Добавлены ссылки на ВКонтакте и GitHub</span>
+                        <span class="version-desc">Добавлены ссылки на ВК и GitHub</span>
                         <span class="version-date">17.06.2026</span>
                     </div>
                     <div class="version-item">
                         <span class="version-num">v0.9</span>
-                        <span class="version-desc">Первая версия лендинга</span>
+                        <span class="version-desc">Первая версия приложения</span>
                         <span class="version-date">16.06.2026</span>
                     </div>
                 </div>
@@ -369,19 +393,6 @@
                 <button class="btn btn-outline" id="versionsBtn" onclick="toggleVersions()">
                     📋 Показать историю версий
                 </button>
-            </div>
-        </div>
-
-        <!-- Связь -->
-        <div class="section">
-            <h2 class="section-title">Связаться с разработчиком</h2>
-            <div class="social-links">
-                <a href="https://vk.com/sav_fujiyama" target="_blank" class="btn btn-vk">
-                    <span class="btn-icon">💬</span> ВКонтакте
-                </a>
-                <a href="https://github.com/jenix-sk" target="_blank" class="btn btn-gh">
-                    <span class="btn-icon">🐙</span> GitHub
-                </a>
             </div>
         </div>
 
@@ -444,7 +455,6 @@
         const restartCheckbox = document.getElementById('restartCheckbox');
         let playing = false;
 
-        // Загрузка настроек
         const savedVolume = localStorage.getItem('musicVolume');
         const savedRestart = localStorage.getItem('musicRestart');
         if (savedVolume !== null) {
