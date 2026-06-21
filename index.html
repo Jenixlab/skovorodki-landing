@@ -3,41 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Сковородки — Jenix</title>
+    <title>SkovUchet — Jenix</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍳</text></svg>">
     <style>
         :root {
-            --bg: #0d0d1a;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.06);
-            --border-hover: rgba(255, 107, 53, 0.3);
-            --text: #e0e0e0;
-            --text-secondary: #888;
-            --text-heading: #fff;
-            --accent: #ff6b35;
-            --accent-hover: #ff8c5a;
-            --gradient: linear-gradient(135deg, #ff6b35, #ff8c5a, #ffaa00);
-            --badge-bg: rgba(255, 107, 53, 0.15);
-            --footer-text: #555;
-            --slider-track: #333;
-            --slider-fill: #ff6b35;
+            --bg: #060b14;
+            --bg-card: rgba(0, 180, 255, 0.04);
+            --border: rgba(0, 200, 255, 0.08);
+            --border-hover: rgba(0, 220, 255, 0.4);
+            --text: #d0e8ff;
+            --text-secondary: #7ba7c9;
+            --text-heading: #ffffff;
+            --accent: #00b4d8;
+            --accent-hover: #00d4ff;
+            --accent-glow: rgba(0, 200, 255, 0.5);
+            --gradient: linear-gradient(135deg, #00b4d8, #0096c7, #00d4ff);
+            --gradient-card: linear-gradient(145deg, rgba(0, 180, 255, 0.08), rgba(0, 100, 180, 0.03));
+            --badge-bg: rgba(0, 200, 255, 0.12);
+            --footer-text: #4a7a9e;
+            --slider-track: #1a2a3a;
+            --slider-fill: #00b4d8;
+            --btn-glow: 0 0 25px rgba(0, 200, 255, 0.3);
+            --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
         }
 
         [data-theme="light"] {
-            --bg: #f5f5f5;
-            --bg-card: #ffffff;
-            --border: rgba(0, 0, 0, 0.08);
-            --border-hover: rgba(255, 107, 53, 0.4);
-            --text: #333333;
-            --text-secondary: #777777;
-            --text-heading: #1a1a1a;
-            --accent: #e65100;
-            --accent-hover: #ff6d00;
-            --gradient: linear-gradient(135deg, #e65100, #ff6d00, #ff9800);
-            --badge-bg: rgba(255, 107, 53, 0.1);
-            --footer-text: #999999;
-            --slider-track: #ddd;
-            --slider-fill: #e65100;
+            --bg: #e8f4fd;
+            --bg-card: rgba(255, 255, 255, 0.85);
+            --border: rgba(0, 150, 200, 0.12);
+            --border-hover: rgba(0, 180, 220, 0.5);
+            --text: #0d2b45;
+            --text-secondary: #3d6d8e;
+            --text-heading: #003d5c;
+            --accent: #0077b6;
+            --accent-hover: #0096d6;
+            --accent-glow: rgba(0, 120, 200, 0.3);
+            --gradient: linear-gradient(135deg, #0077b6, #0096c7, #00b4d8);
+            --gradient-card: linear-gradient(145deg, rgba(0, 150, 200, 0.06), rgba(255, 255, 255, 0.9));
+            --badge-bg: rgba(0, 150, 200, 0.1);
+            --footer-text: #5a8aaa;
+            --slider-track: #cce5f5;
+            --slider-fill: #0077b6;
+            --btn-glow: 0 0 20px rgba(0, 150, 200, 0.2);
+            --card-shadow: 0 10px 40px rgba(0, 100, 150, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -51,12 +59,33 @@
             transition: background 0.5s ease, color 0.5s ease;
         }
 
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 200, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 200, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
+        }
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; }
+        }
+
         .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
-        .particle { position: absolute; background: var(--accent); border-radius: 50%; animation: float linear infinite; opacity: 0.15; }
-        [data-theme="light"] .particle { opacity: 0.08; }
+        .particle {
+            position: absolute; background: var(--accent); border-radius: 50%;
+            animation: float linear infinite; opacity: 0.2;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+        [data-theme="light"] .particle { opacity: 0.1; }
         @keyframes float {
             0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 0.2; }
+            10% { opacity: 0.3; }
             90% { opacity: 0.1; }
             100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
@@ -70,20 +99,22 @@
             color: var(--text); cursor: pointer; font-size: 20px;
             display: flex; align-items: center; justify-content: center;
             transition: all 0.3s ease; backdrop-filter: blur(10px);
+            box-shadow: 0 0 15px rgba(0, 180, 220, 0.1);
         }
-        .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); transform: scale(1.1); }
+        .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); transform: scale(1.1); box-shadow: var(--btn-glow); }
         .ctrl-btn.playing { border-color: var(--accent); animation: musicPulse 2s infinite; }
         @keyframes musicPulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 53, 0.3); }
-            50% { box-shadow: 0 0 20px 10px rgba(255, 107, 53, 0.1); }
+            0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+            50% { box-shadow: 0 0 25px 8px var(--accent-glow); }
         }
 
         .settings-panel {
             position: fixed; top: 70px; right: 20px; z-index: 49;
             background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 16px; padding: 20px 18px; min-width: 240px;
+            border-radius: 16px; padding: 20px 18px; min-width: 260px;
             backdrop-filter: blur(20px); opacity: 0; visibility: hidden;
             transform: translateY(-10px); transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
         }
         .settings-panel.open { opacity: 1; visibility: visible; transform: translateY(0); }
         .settings-panel label {
@@ -92,6 +123,10 @@
         }
         .settings-panel label input[type="checkbox"] {
             accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer;
+        }
+        .settings-panel .music-info {
+            font-size: 11px; color: var(--text-secondary); margin-top: -8px; margin-bottom: 14px;
+            padding-left: 26px;
         }
         .volume-row { display: flex; align-items: center; gap: 10px; }
         .volume-row span { font-size: 13px; color: var(--text); white-space: nowrap; }
@@ -110,42 +145,89 @@
         .volume-slider::-webkit-slider-thumb {
             -webkit-appearance: none; appearance: none; width: 18px; height: 18px;
             border-radius: 50%; background: var(--slider-fill); cursor: pointer;
-            border: 2px solid var(--bg-card); box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            border: 2px solid var(--bg-card); box-shadow: 0 0 10px var(--accent-glow);
         }
 
         .header { text-align: center; padding: 60px 0 40px; }
-        .logo { font-size: 80px; animation: bounce 2s infinite; }
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .logo {
+            font-size: 90px; animation: bounce3d 2s infinite;
+            filter: drop-shadow(0 10px 20px var(--accent-glow));
+        }
+        @keyframes bounce3d {
+            0%, 100% { transform: translateY(0) rotateY(0deg); }
+            25% { transform: translateY(-15px) rotateY(10deg); }
+            75% { transform: translateY(-5px) rotateY(-10deg); }
+        }
         .header h1 {
             font-size: 52px; font-weight: 900;
             background: var(--gradient);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
             margin: 10px 0;
+            filter: drop-shadow(0 0 20px var(--accent-glow));
         }
-        .header .subtitle { font-size: 18px; color: var(--text-secondary); letter-spacing: 4px; text-transform: uppercase; }
+        .header .subtitle { font-size: 18px; color: var(--text-secondary); letter-spacing: 6px; text-transform: uppercase; }
         .author-badge {
             display: inline-block; margin-top: 20px; padding: 10px 25px;
             background: var(--badge-bg); border: 1px solid var(--border-hover);
             border-radius: 50px; color: var(--accent); font-size: 16px; letter-spacing: 1px;
+            backdrop-filter: blur(5px);
         }
         .author-name { font-weight: 700; color: var(--accent-hover); }
 
         .section { margin: 30px 0; }
         .section-title {
-            font-size: 14px; text-transform: uppercase; letter-spacing: 3px;
-            color: var(--accent); margin-bottom: 20px; padding-left: 15px; border-left: 3px solid var(--accent);
+            font-size: 13px; text-transform: uppercase; letter-spacing: 4px;
+            color: var(--accent); margin-bottom: 20px; padding-left: 15px;
+            border-left: 3px solid var(--accent);
+            text-shadow: 0 0 10px var(--accent-glow);
         }
 
-        .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-        @media (max-width: 750px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 500px) { .cards-grid { grid-template-columns: 1fr; } .header h1 { font-size: 36px; } }
-        .card {
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 18px; padding: 28px 22px; text-align: center;
-            transition: all 0.3s ease;
+        .description-card {
+            background: var(--gradient-card); border: 1px solid var(--border);
+            border-radius: 20px; padding: 30px; backdrop-filter: blur(5px);
+            box-shadow: var(--card-shadow); line-height: 1.8;
+            font-size: 15px; color: var(--text);
         }
-        .card:hover { transform: translateY(-5px); border-color: var(--border-hover); box-shadow: 0 20px 60px rgba(255, 107, 53, 0.08); }
-        .card-icon { font-size: 44px; margin-bottom: 12px; }
+        .description-card p { margin-bottom: 12px; }
+        .description-card .highlight { color: var(--accent); font-weight: 600; }
+
+        /* Основная сетка: 2 ряда по 3, потом 1 по центру, потом платформы */
+        .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .cards-grid .card-centered { grid-column: 2; }
+        @media (max-width: 750px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } .cards-grid .card-centered { grid-column: span 1; } }
+        @media (max-width: 500px) { .cards-grid { grid-template-columns: 1fr; } .header h1 { font-size: 36px; } }
+
+        .platforms-row {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px;
+        }
+        @media (max-width: 500px) { .platforms-row { grid-template-columns: 1fr; } }
+
+        .card {
+            background: var(--gradient-card); border: 1px solid var(--border);
+            border-radius: 18px; padding: 28px 22px; text-align: center;
+            transition: all 0.3s ease; backdrop-filter: blur(5px);
+            box-shadow: var(--card-shadow);
+        }
+        .card:hover {
+            transform: translateY(-5px) rotateX(2deg);
+            border-color: var(--border-hover);
+            box-shadow: 0 20px 60px rgba(0, 180, 220, 0.15), var(--btn-glow);
+        }
+        .card-icon {
+            font-size: 48px; margin-bottom: 12px;
+            filter: drop-shadow(0 5px 10px rgba(0, 180, 220, 0.4));
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .card:nth-child(2) .card-icon { animation-delay: 0.2s; }
+        .card:nth-child(3) .card-icon { animation-delay: 0.4s; }
+        .card:nth-child(4) .card-icon { animation-delay: 0.6s; }
+        .card:nth-child(5) .card-icon { animation-delay: 0.8s; }
+        .card:nth-child(6) .card-icon { animation-delay: 1.0s; }
+        .card:nth-child(7) .card-icon { animation-delay: 1.2s; }
         .card h3 { font-size: 18px; margin-bottom: 6px; color: var(--text-heading); }
         .card p { color: var(--text-secondary); font-size: 13px; margin-bottom: 14px; line-height: 1.5; }
         .card .badge { display: inline-block; padding: 4px 10px; background: var(--badge-bg); border-radius: 20px; font-size: 11px; color: var(--accent); margin: 2px; }
@@ -155,42 +237,59 @@
             padding: 14px 30px; border-radius: 50px; font-size: 15px; font-weight: 700;
             text-decoration: none; cursor: pointer; transition: all 0.3s ease; border: none;
             letter-spacing: 0.5px; min-width: 160px;
+            position: relative; overflow: hidden;
         }
-        .btn-primary { background: var(--gradient); color: #fff; box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255, 107, 53, 0.5); }
-        .btn-vk { background: #0077ff; color: #fff; }
-        .btn-vk:hover { background: #3399ff; }
-        .btn-tg { background: #0088cc; color: #fff; }
-        .btn-tg:hover { background: #00a8e8; }
-        .btn-gh { background: #24292e; color: #fff; }
-        .btn-gh:hover { background: #444d56; }
+        .btn::after {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg); transition: all 0.5s ease;
+        }
+        .btn:hover::after { left: 100%; }
+        .btn-primary { background: var(--gradient); color: #fff; box-shadow: var(--btn-glow); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 15px 40px var(--accent-glow); }
+        .btn-vk { background: #0077ff; color: #fff; box-shadow: 0 0 15px rgba(0, 119, 255, 0.3); }
+        .btn-vk:hover { background: #3399ff; box-shadow: 0 0 25px rgba(0, 119, 255, 0.5); }
+        .btn-tg { background: #0088cc; color: #fff; box-shadow: 0 0 15px rgba(0, 136, 204, 0.3); }
+        .btn-tg:hover { background: #00a8e8; box-shadow: 0 0 25px rgba(0, 136, 204, 0.5); }
+        .btn-gh { background: #1a1a2e; color: #fff; border: 1px solid rgba(0, 200, 255, 0.3); box-shadow: 0 0 15px rgba(0, 180, 220, 0.2); }
+        .btn-gh:hover { background: #2a2a4e; box-shadow: 0 0 25px rgba(0, 200, 255, 0.4); }
         .btn-outline { background: transparent; border: 2px solid var(--accent); color: var(--accent); }
-        .btn-outline:hover { background: rgba(255, 107, 53, 0.1); }
-        .btn-icon { font-size: 20px; }
+        .btn-outline:hover { background: rgba(0, 200, 255, 0.1); box-shadow: var(--btn-glow); }
+        .btn-icon { font-size: 20px; filter: drop-shadow(0 0 5px var(--accent-glow)); }
         .btn-center { display: flex; justify-content: center; margin-top: 20px; }
 
         .download-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         @media (max-width: 650px) { .download-section { grid-template-columns: 1fr; } }
         .download-card {
-            background: var(--bg-card); border: 1px solid var(--border);
+            background: var(--gradient-card); border: 1px solid var(--border);
             border-radius: 20px; padding: 35px 25px; text-align: center; transition: all 0.3s ease;
+            backdrop-filter: blur(5px); box-shadow: var(--card-shadow);
         }
-        .download-card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
-        .download-card .icon { font-size: 55px; }
+        .download-card:hover {
+            border-color: var(--border-hover); transform: translateY(-3px);
+            box-shadow: 0 20px 60px rgba(0, 180, 220, 0.15), var(--btn-glow);
+        }
+        .download-card .icon {
+            font-size: 60px;
+            filter: drop-shadow(0 8px 15px rgba(0, 180, 220, 0.5));
+            animation: iconFloat 3s ease-in-out infinite;
+        }
         .download-card h3 { font-size: 20px; margin: 12px 0 6px; color: var(--text-heading); }
         .download-card .info { color: var(--text-secondary); font-size: 13px; margin-bottom: 18px; }
         .download-card .size { color: var(--accent); font-weight: 600; font-size: 13px; }
 
         .versions-panel { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
-        .versions-panel.open { max-height: 800px; margin-top: 20px; }
+        .versions-panel.open { max-height: 1100px; margin-top: 20px; }
         .versions-list { display: flex; flex-direction: column; gap: 10px; }
         .version-item {
             display: flex; align-items: center; justify-content: space-between;
-            background: var(--bg-card); border: 1px solid var(--border);
+            background: var(--gradient-card); border: 1px solid var(--border);
             border-radius: 14px; padding: 14px 20px; transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
-        .version-item:hover { border-color: var(--border-hover); }
-        .version-num { font-size: 18px; font-weight: 900; color: var(--accent); min-width: 50px; }
+        .version-item:hover { border-color: var(--border-hover); box-shadow: var(--btn-glow); }
+        .version-num { font-size: 18px; font-weight: 900; color: var(--accent); min-width: 50px; text-shadow: 0 0 10px var(--accent-glow); }
         .version-desc { flex: 1; padding: 0 20px; color: var(--text); font-size: 14px; }
         .version-date { color: var(--text-secondary); font-size: 12px; white-space: nowrap; }
 
@@ -215,6 +314,7 @@
             <input type="checkbox" id="restartCheckbox" onchange="saveSettings()">
             Проигрывать музыку сначала
         </label>
+        <p class="music-info">🎵 813 - Crying Flute Ambient Wave Bootleg</p>
         <div class="volume-row">
             <button class="volume-btn" onclick="changeVolume(-5)">−</button>
             <span id="volumeLabel">30%</span>
@@ -238,6 +338,17 @@
             </div>
         </header>
 
+        <!-- Описание -->
+        <div class="section">
+            <h2 class="section-title">Описание</h2>
+            <div class="description-card">
+                <p><span class="highlight">SkovUchet</span> — это удобное приложение для учёта сковородок, созданное для магазинов, складов и частных коллекционеров.</p>
+                <p>Приложение позволяет <span class="highlight">добавлять, редактировать и удалять</span> модели с 9 характеристиками: модель, бренд, материал основы, внутреннее покрытие, толщина дна и стенок, объём, количество и цена.</p>
+                <p>Все данные сохраняются в <span class="highlight">Excel-файл (.xlsx)</span> с возможностью импорта и экспорта. Встроенная генерация создаёт <span class="highlight">150 случайных моделей</span> для быстрого тестирования.</p>
+                <p>Доступно на <span class="highlight">Android</span> (Kotlin, Jetpack Compose, Material 3) и <span class="highlight">Windows</span> (Python, Tkinter). Поддержка тёмной и светлой тем, сортировка, поиск, звуки кнопок.</p>
+            </div>
+        </div>
+
         <!-- Скачать -->
         <div class="section">
             <h2 class="section-title">Скачать приложение</h2>
@@ -249,7 +360,7 @@
                     <p class="size">~15 MB • Android 8.0+</p>
                     <br>
                     <a href="./files/SkovUchet.apk" class="btn btn-primary" download>
-                        <span>⬇</span> Скачать APK
+                        <span class="btn-icon">⬇</span> Скачать APK
                     </a>
                 </div>
                 <div class="download-card">
@@ -259,7 +370,7 @@
                     <p class="size">~12 MB • Windows 10/11</p>
                     <br>
                     <a href="./files/SkovUchet.zip" class="btn btn-primary" download>
-                        <span>⬇</span> Скачать ZIP
+                        <span class="btn-icon">⬇</span> Скачать ZIP
                     </a>
                 </div>
             </div>
@@ -275,9 +386,13 @@
                 <div class="card"><div class="card-icon">✨</div><h3>Генерация</h3><p>150 случайных моделей для тестирования</p><span class="badge">Demo</span></div>
                 <div class="card"><div class="card-icon">🔊</div><h3>Звуки</h3><p>Приятные звуки кнопок с возможностью отключения</p><span class="badge">Sound</span></div>
                 <div class="card"><div class="card-icon">📋</div><h3>Сортировка</h3><p>По названию, бренду, цене и количеству</p><span class="badge">Сортировка</span></div>
+                <!-- Автосохранение по центру -->
+                <div class="card card-centered"><div class="card-icon">💾</div><h3>Автосохранение</h3><p>Данные сохраняются при выходе из приложения</p><span class="badge">Save</span></div>
+            </div>
+            <!-- Платформы -->
+            <div class="platforms-row">
                 <div class="card"><div class="card-icon">📱</div><h3>Android</h3><p>Нативный Kotlin + Jetpack Compose + Material 3</p><span class="badge">APK</span></div>
                 <div class="card"><div class="card-icon">💻</div><h3>Windows</h3><p>Python + Tkinter, запуск без установки</p><span class="badge">ZIP</span></div>
-                <div class="card"><div class="card-icon">💾</div><h3>Автосохранение</h3><p>Данные сохраняются при выходе из приложения</p><span class="badge">Save</span></div>
             </div>
         </div>
 
@@ -286,12 +401,15 @@
             <h2 class="section-title">История версий</h2>
             <div class="versions-panel" id="versionsPanel">
                 <div class="versions-list">
+                    <div class="version-item"><span class="version-num">v1.7</span><span class="version-desc">Слегка отредактирован раздел «Возможности приложения»: иконки платформ (Android и Windows) вынесены в отдельную строку, автосохранение расположено по центру под вторым рядом.</span><span class="version-date">20.06.2026</span></div>
+                    <div class="version-item"><span class="version-num">v1.6</span><span class="version-desc">Добавлен новый раздел «Описание» с подробной информацией о приложении.</span><span class="version-date">20.06.2026</span></div>
+                    <div class="version-item"><span class="version-num">v1.5</span><span class="version-desc">Переработан дизайн сайта: добавлены анимации иконок характеристик, цвета изменены на более мягкие. В раздел музыки добавлено название трека.</span><span class="version-date">20.06.2026</span></div>
                     <div class="version-item"><span class="version-num">v1.4</span><span class="version-desc">Приложение переименовано в SkovUchet. Обновлён APK.</span><span class="version-date">19.06.2026</span></div>
                     <div class="version-item"><span class="version-num">v1.3</span><span class="version-desc">Обновлена музыка на сайте. Добавлена ссылка на Telegram. GitHub вынесен в отдельный раздел.</span><span class="version-date">19.06.2026</span></div>
                     <div class="version-item"><span class="version-num">v1.2</span><span class="version-desc">Добавлены настройки музыки: проигрывание сначала и ползунок громкости</span><span class="version-date">18.06.2026</span></div>
                     <div class="version-item"><span class="version-num">v1.1</span><span class="version-desc">Добавлен раздел версий лендинга, ссылки стилизованы под полноценные кнопки</span><span class="version-date">18.06.2026</span></div>
                     <div class="version-item"><span class="version-num">v1.0</span><span class="version-desc">Добавлены ссылки на ВК и GitHub</span><span class="version-date">17.06.2026</span></div>
-                    <div class="version-item"><span class="version-num">v0.9</span><span class="version-desc">Первая версия приложения</span><span class="version-date">16.06.2026</span></div>
+                    <div class="version-item"><span class="version-num">v0.9</span><span class="version-desc">Первая версия лендинга</span><span class="version-date">16.06.2026</span></div>
                 </div>
             </div>
             <div class="btn-center">
